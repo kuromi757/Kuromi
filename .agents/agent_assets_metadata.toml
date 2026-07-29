@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "njTwLGNYJ8iNC7xj1mtKo"
+uri = "file://kuromi.zip"
+type = "unspecified"
+title = "Kuromi — Proyecto Flutter completo"
