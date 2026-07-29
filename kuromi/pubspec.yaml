@@ -1,0 +1,48 @@
+name: kuromi
+description: Kuromi - Tu reproductor de música personal
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  just_audio: ^0.9.36
+  just_audio_background: ^0.0.1-beta.11
+  audio_service: ^0.18.12
+  on_audio_query: ^2.9.0
+  provider: ^6.1.1
+  shared_preferences: ^2.2.2
+  image_picker: ^1.0.7
+  flutter_colorpicker: ^1.0.3
+  permission_handler: ^11.3.0
+  path_provider: ^2.1.2
+  path: ^1.9.0
+  lrc: ^1.1.1
+  flutter_animate: ^4.5.0
+  palette_generator: ^0.3.3+3
+  cached_network_image: ^3.3.1
+  rxdart: ^0.27.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+  # Para fuentes personalizadas, descarga Nunito de fonts.google.com
+  # y descomenta lo siguiente:
+  # fonts:
+  #   - family: Nunito
+  #     fonts:
+  #       - asset: assets/fonts/Nunito-Regular.ttf
+  #       - asset: assets/fonts/Nunito-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/Nunito-SemiBold.ttf
+  #         weight: 600
