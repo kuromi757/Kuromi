@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 import 'package:provider/provider.dart';
 import 'providers/audio_provider.dart';
 import 'providers/theme_provider.dart';
@@ -9,13 +8,6 @@ import 'screens/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.kuromi.audio',
-    androidNotificationChannelName: 'Kuromi Audio',
-    androidNotificationOngoing: true,
-    androidShowNotificationBadge: true,
-  );
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),

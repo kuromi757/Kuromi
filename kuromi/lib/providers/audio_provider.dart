@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
-import 'package:audio_service/audio_service.dart';
 import '../models/song.dart';
 
 enum RepeatMode { off, one, all }
@@ -15,7 +13,6 @@ class AudioProvider extends ChangeNotifier {
   bool _shuffle = false;
   RepeatMode _repeat = RepeatMode.off;
   Timer? _sleepTimer;
-  int? _sleepTimerSeconds;
   int _sleepTimerRemaining = 0;
   Timer? _sleepCountdown;
 
@@ -61,29 +58,15 @@ class AudioProvider extends ChangeNotifier {
     } else {
       _currentIndex = _queue.indexOf(song);
     }
-
     await _loadAndPlay();
   }
 
   Future<void> _loadAndPlay() async {
     if (_currentIndex < 0 || _currentIndex >= _queue.length) return;
     final song = _queue[_currentIndex];
-
     try {
       await _player.setAudioSource(
-        AudioSource.uri(
-          Uri.parse(song.uri),
-          tag: MediaItem(
-            id: song.id.toString(),
-            title: song.title,
-            artist: song.artist,
-            album: song.album,
-            duration: Duration(milliseconds: song.duration),
-            artUri: song.albumArtUri != null
-                ? Uri.parse(song.albumArtUri!)
-                : null,
-          ),
-        ),
+        AudioSource.uri(Uri.parse(song.uri)),
       );
       await _player.play();
       notifyListeners();
@@ -126,12 +109,8 @@ class AudioProvider extends ChangeNotifier {
   Future<void> skipNext() async {
     if (_queue.isEmpty) return;
     if (_shuffle) {
-      final random = (_currentIndex +
-              1 +
-              (DateTime.now().millisecondsSinceEpoch % (_queue.length - 1)))
-          .abs() %
-          _queue.length;
-      _currentIndex = random;
+      _currentIndex =
+          (DateTime.now().millisecondsSinceEpoch % _queue.length).abs();
     } else {
       _currentIndex = (_currentIndex + 1) % _queue.length;
     }
@@ -179,8 +158,7 @@ class AudioProvider extends ChangeNotifier {
 
   void setSleepTimer(int minutes) {
     _cancelSleepTimer();
-    _sleepTimerSeconds = minutes * 60;
-    _sleepTimerRemaining = _sleepTimerSeconds!;
+    _sleepTimerRemaining = minutes * 60;
     _sleepTimer = Timer(Duration(minutes: minutes), () {
       _player.pause();
       _cancelSleepTimer();
