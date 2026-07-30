@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/audio_provider.dart';
 import '../providers/library_provider.dart';
+import '../models/song.dart';
 import '../models/playlist.dart';
 import '../widgets/song_tile.dart';
 import 'now_playing_screen.dart';
@@ -53,8 +54,7 @@ class PlaylistsScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text('Crea tu primera lista',
                         style: theme.textTheme.titleMedium?.copyWith(
-                          color:
-                              theme.colorScheme.onBackground.withOpacity(0.5),
+                          color: theme.colorScheme.onBackground.withOpacity(0.5),
                         )),
                   ],
                 ),
@@ -164,10 +164,7 @@ class PlaylistsScreen extends StatelessWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Renombrar'),
-        content: TextField(
-          controller: ctrl,
-          autofocus: true,
-        ),
+        content: TextField(controller: ctrl, autofocus: true),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(ctx),
@@ -211,9 +208,8 @@ class PlaylistDetailScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.shuffle_rounded),
               onPressed: () async {
-                final songs = List.from(playlist.songs)..shuffle();
-                await audio.playSong(songs.first,
-                    queue: songs, index: 0);
+                final songs = List<Song>.from(playlist.songs)..shuffle();
+                await audio.playSong(songs.first, queue: songs, index: 0);
                 if (context.mounted) {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => const NowPlayingScreen()));

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/audio_provider.dart';
 import '../providers/library_provider.dart';
+import '../models/song.dart';
 import '../widgets/song_tile.dart';
 import 'now_playing_screen.dart';
 
@@ -84,7 +85,7 @@ class FoldersScreen extends StatelessWidget {
 
 class FolderDetailScreen extends StatelessWidget {
   final String folderName;
-  final List songs;
+  final List<Song> songs;
 
   const FolderDetailScreen(
       {super.key, required this.folderName, required this.songs});
@@ -99,9 +100,8 @@ class FolderDetailScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.shuffle_rounded),
             onPressed: () async {
-              final shuffled = List.from(songs)..shuffle();
-              await audio.playSong(shuffled.first,
-                  queue: shuffled.cast(), index: 0);
+              final shuffled = List<Song>.from(songs)..shuffle();
+              await audio.playSong(shuffled.first, queue: shuffled, index: 0);
               if (context.mounted) {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => const NowPlayingScreen()));
@@ -119,7 +119,7 @@ class FolderDetailScreen extends StatelessWidget {
             song: song,
             isPlaying: audio.currentSong?.id == song.id,
             onTap: () async {
-              await audio.playSong(song, queue: songs.cast(), index: i);
+              await audio.playSong(song, queue: songs, index: i);
               if (context.mounted) {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => const NowPlayingScreen()));
