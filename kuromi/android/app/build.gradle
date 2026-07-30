@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "com.kuromi.music"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
